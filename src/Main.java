@@ -16,7 +16,7 @@ public class Main {
 
         //penampung dari random number
         int selectedMenu = 0;
-        
+
         while (true) {
             boolean isBreak = false;
 
@@ -62,7 +62,7 @@ public class Main {
 
                     selectionSortDescSimulation(listNumber);
                 }
-                case 6 ->  {
+                case 6 -> {
                     System.out.println("Keluar..");
                     isBreak = true;
                 }
@@ -84,7 +84,7 @@ public class Main {
             System.out.println("Pass " + (i + 1));
             for (int j = i + 1; j < n; j++) {
                 System.out.println(listNumber);
-                if (listNumber.get(j) < listNumber.get(minIndex)) {
+                if (listNumber.get(j) > listNumber.get(minIndex)) {
                     minIndex = j;
                 }
             }
@@ -97,12 +97,57 @@ public class Main {
     }
 
     private static void bubbleSortDescSimulation(List<Integer> listNumber) {
+        for (int i = 0; i < listNumber.size(); i++) {
+
+            System.out.println("Pass " + (i + 1));
+            for (int j = 1; j < listNumber.size(); j++) {
+
+                System.out.println(listNumber);
+                if (listNumber.get(j - 1) < listNumber.get(j)) {
+                    int temp = listNumber.get(j - 1);
+                    listNumber.set(j - 1, listNumber.get(j));
+                    listNumber.set(j, temp);
+                }
+            }
+            System.out.println("Result of Pass " + (i + 1));
+        }
     }
 
     private static void selectionSortAscSimulation(List<Integer> listNumber) {
+        int n = listNumber.size();
+        for (int i = 0; i < n - 1; i++) {
+            int minIndex = i;
+
+            System.out.println("Pass " + (i + 1));
+            for (int j = i + 1; j < n; j++) {
+                System.out.println(listNumber);
+                if (listNumber.get(j) < listNumber.get(minIndex)) {
+                    minIndex = j;
+                }
+            }
+            System.out.println("Result of Pass " + (i + 1));
+
+            int temp = listNumber.get(minIndex);
+            listNumber.set(minIndex, listNumber.get(i));
+            listNumber.set(i, temp);
+        }
     }
 
     private static void bubbleSortAscSimulation(List<Integer> listNumber) {
+        for (int i = 0; i < listNumber.size(); i++) {
+
+            System.out.println("Pass " + (i + 1));
+            for (int j = 1; j < listNumber.size(); j++) {
+
+                System.out.println(listNumber);
+                if (listNumber.get(j - 1) > listNumber.get(j)) {
+                    int temp = listNumber.get(j - 1);
+                    listNumber.set(j - 1, listNumber.get(j));
+                    listNumber.set(j, temp);
+                }
+            }
+            System.out.println("Result of Pass " + (i + 1));
+        }
     }
 
     private static void generateRandomNumber() {
