@@ -4,75 +4,96 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
-
+    private static final Scanner sc = new Scanner(System.in);
     public static final int maxSizeArray = 5;
-    public static void main(String[] args) {
+    private static List<Integer> listNumber = new ArrayList<>();
+    private static int lowerLimit = 0;
+    private static int upperLimit = 0;
 
+
+    public static void main(String[] args) {
         printMenu();
-        Scanner sc = new Scanner(System.in);
 
         //penampung dari random number
-        List<Integer> listNumber = new ArrayList<>();
-        int selectedMenu;
-        int lowerLimit, upperLimit;
+        int selectedMenu = 0;
+        
+        while (true) {
+            boolean isBreak = false;
 
-        for(selectedMenu = 1; selectedMenu <= 6; selectedMenu++){
             System.out.println("Masukkan Pilihan Anda");
             selectedMenu = sc.nextInt();
             sc.nextLine();
 
-            switch (selectedMenu){
-                case 1:
-                    System.out.println("Batas Bawah: ");
-                    lowerLimit = sc.nextInt();
-                    sc.nextLine();
-
-                    System.out.println("Batas Atas: ");
-                    upperLimit = sc.nextInt();
-                    sc.nextLine();
-
-                    if (listNumber.size() > 0){
-                        listNumber.clear();
+            switch (selectedMenu) {
+                case 1 -> {
+                    inputNumber();
+                    generateRandomNumber();
+                    System.out.println();
+                }
+                case 2 -> {
+                    if (listNumber.isEmpty()) {
+                        inputNumber();
+                        generateRandomNumber();
                     }
 
-                    if (lowerLimit > upperLimit || listNumber.size() > upperLimit - lowerLimit + 1) {
-                        System.out.println("Invalid input!");
-                        return;
-                    }
-
-                    generateRandomNumber(listNumber, lowerLimit, upperLimit);
-                    System.out.println(listNumber);
-                    break;
-
-                case 2:
                     bubbleSortAscSimulation(listNumber);
-                    break;
+                }
+                case 3 -> {
+                    if (listNumber.isEmpty()) {
+                        inputNumber();
+                        generateRandomNumber();
+                    }
 
-                case 3:
                     selectionSortAscSimulation(listNumber);
-                    break;
+                }
+                case 4 -> {
+                    if (listNumber.isEmpty()) {
+                        inputNumber();
+                        generateRandomNumber();
+                    }
 
-                case 4:
                     bubbleSortDescSimulation(listNumber);
-                    break;
+                }
+                case 5 -> {
+                    if (listNumber.isEmpty()) {
+                        inputNumber();
+                        generateRandomNumber();
+                    }
 
-                case 5:
                     selectionSortDescSimulation(listNumber);
-                    break;
-
-                case 6:
+                }
+                case 6 ->  {
                     System.out.println("Keluar..");
-                    break;
+                    isBreak = true;
+                }
+                default -> System.out.println("Pilihan kamu tidak valid!");
+            }
 
-                default:
-                    System.out.println("Pilihan kamu tidak valid!");
-                    break;
+            if (isBreak) {
+                break;
             }
         }
 
     }
 
     private static void selectionSortDescSimulation(List<Integer> listNumber) {
+        int n = listNumber.size();
+        for (int i = 0; i < n - 1; i++) {
+            int minIndex = i;
+
+            System.out.println("Pass " + (i + 1));
+            for (int j = i + 1; j < n; j++) {
+                System.out.println(listNumber);
+                if (listNumber.get(j) < listNumber.get(minIndex)) {
+                    minIndex = j;
+                }
+            }
+            System.out.println("Result of Pass " + (i + 1));
+
+            int temp = listNumber.get(minIndex);
+            listNumber.set(minIndex, listNumber.get(i));
+            listNumber.set(i, temp);
+        }
     }
 
     private static void bubbleSortDescSimulation(List<Integer> listNumber) {
@@ -84,7 +105,14 @@ public class Main {
     private static void bubbleSortAscSimulation(List<Integer> listNumber) {
     }
 
-    private static void generateRandomNumber(List<Integer> listNumber, int lowerLimit, int upperLimit) {
+    private static void generateRandomNumber() {
+        if (lowerLimit == upperLimit || lowerLimit > upperLimit) {
+            System.out.println("Invalid input!");
+        }
+
+        if (listNumber.size() > 0) {
+            listNumber.clear();
+        }
 
         Random random = new Random();
         int count = 0;
@@ -111,4 +139,13 @@ public class Main {
         System.out.println("6. Keluar");
     }
 
+    private static void inputNumber() {
+        System.out.println("Batas Bawah: ");
+        lowerLimit = sc.nextInt();
+        sc.nextLine();
+
+        System.out.println("Batas Atas: ");
+        upperLimit = sc.nextInt();
+        sc.nextLine();
+    }
 }
